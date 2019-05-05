@@ -1,5 +1,7 @@
 # Resolut Backend
 
+[![Build Status](https://travis-ci.org/alanbuttars/resolutbackend.svg?branch=master)](https://travis-ci.org/alanbuttars/resolutbackend)
+
 This repository represents a simple RESTful API for money transfers between accounts.
 
 ### Deploy instructions

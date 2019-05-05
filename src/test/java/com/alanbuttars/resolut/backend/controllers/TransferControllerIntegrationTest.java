@@ -24,8 +24,8 @@ public class TransferControllerIntegrationTest extends BaseControllerIntegration
         Assert.assertEquals(200, connection.getResponseCode());
         String body = readResponse(connection);
         Transfer[] transfers = SerializerService.getInstance().fromJson(body, Transfer[].class);
-        Assert.assertEquals(transferId1, transfers[0].getId());
-        Assert.assertEquals(transferId2, transfers[1].getId());
+        Assert.assertEquals(transferId1, transfers[transfers.length - 2].getId());
+        Assert.assertEquals(transferId2, transfers[transfers.length - 1].getId());
     }
 
     @Test

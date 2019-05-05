@@ -1,0 +1,9 @@
+language: java
+
+jdk:
+  - oraclejdk11
+
+install: mvn -B install -U -DskipTests=true -Dgpg.skip
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
