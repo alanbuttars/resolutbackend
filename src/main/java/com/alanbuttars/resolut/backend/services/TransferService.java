@@ -34,7 +34,7 @@ public class TransferService {
             Map<String, Map<Integer, Transfer>> transfersBySenderAccountId = new HashMap<>();
             Map<String, Map<Integer, Transfer>> transfersByReceiverAccountId = new HashMap<>();
 
-            user.getAccounts().values().forEach(account -> {
+            user.getAccounts().values().stream().forEach(account -> {
                 /**
                  * Using LinkedHashMaps here for performance reasons:
                  *      - We want to maintain ordering based on the key (which is the transfer ID), but those IDs will be inserted in-order anyway

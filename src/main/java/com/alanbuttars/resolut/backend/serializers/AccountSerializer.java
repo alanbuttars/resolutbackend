@@ -21,7 +21,7 @@ public class AccountSerializer implements JsonSerializer<Account> {
 
     public JsonElement serialize(Collection<Account> accounts, JsonSerializationContext jsonSerializationContext) {
         JsonArray accountsJson = new JsonArray();
-        accounts.forEach(account -> {
+        accounts.stream().forEach(account -> {
             accountsJson.add(serialize(account, Account.class, jsonSerializationContext));
         });
         return accountsJson;
