@@ -17,8 +17,6 @@ import java.nio.charset.Charset;
 
 public class BaseControllerIntegrationTest {
 
-    private static final String SERVER_BASE = "http://" + Server.HOST + ":" + Server.PORT;
-
     private static Server server = new Server();
 
     @BeforeClass
@@ -32,7 +30,7 @@ public class BaseControllerIntegrationTest {
     }
 
     public HttpURLConnection get(String path) throws IOException {
-        URL url = new URL(SERVER_BASE + path);
+        URL url = new URL(Server.basename() + path);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
@@ -41,7 +39,7 @@ public class BaseControllerIntegrationTest {
     }
 
     public HttpURLConnection post(String path, JsonElement jsonElement) throws IOException {
-        URL url = new URL(SERVER_BASE + path);
+        URL url = new URL(Server.basename() + path);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");

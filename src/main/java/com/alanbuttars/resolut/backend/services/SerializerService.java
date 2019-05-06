@@ -1,8 +1,10 @@
 package com.alanbuttars.resolut.backend.services;
 
 import com.alanbuttars.resolut.backend.models.Account;
+import com.alanbuttars.resolut.backend.models.Transfer;
 import com.alanbuttars.resolut.backend.models.User;
 import com.alanbuttars.resolut.backend.serializers.AccountSerializer;
+import com.alanbuttars.resolut.backend.serializers.TransferSerializer;
 import com.alanbuttars.resolut.backend.serializers.UserSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,7 +21,9 @@ public class SerializerService {
     private SerializerService() {
         this.gson = new GsonBuilder()//
                 .registerTypeAdapter(Account.class, new AccountSerializer())//
+                .registerTypeAdapter(Transfer.class, new TransferSerializer())//
                 .registerTypeAdapter(User.class, new UserSerializer())//
+                .setPrettyPrinting()//
                 .create();
     }
 

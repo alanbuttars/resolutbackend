@@ -37,6 +37,10 @@ public class Server {
                 .build();
     }
 
+    public static String basename() {
+        return "http://" + HOST + ":" + PORT;
+    }
+
     /**
      * Returns a {@link HttpHandler} capable of dispatching worker threads.
      */

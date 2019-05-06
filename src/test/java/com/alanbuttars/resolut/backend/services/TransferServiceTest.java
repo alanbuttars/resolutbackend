@@ -3,7 +3,6 @@ package com.alanbuttars.resolut.backend.services;
 import com.alanbuttars.resolut.backend.models.Account;
 import com.alanbuttars.resolut.backend.models.Result;
 import com.alanbuttars.resolut.backend.models.Transfer;
-import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +18,6 @@ public class TransferServiceTest {
         Result<List<Transfer>> result = TransferService.getInstance().listTransfers("alice", "home");
         Assert.assertTrue(result.succeeded());
         List<Transfer> transfers = result.getTarget();
-        System.out.println(new Gson().toJson(transfers));
         Assert.assertEquals(transferId1, transfers.get(transfers.size() - 2).getId());
         Assert.assertEquals(transferId2, transfers.get(transfers.size() - 1).getId());
     }

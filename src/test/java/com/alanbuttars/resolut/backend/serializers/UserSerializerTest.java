@@ -22,6 +22,8 @@ public class UserSerializerTest {
         );
         User serializedUser = new User("user-id", serializedAccounts);
         JsonElement serialized = serializer.serialize(serializedUser, User.class, null);
+        Assert.assertNotNull(serialized.getAsJsonObject().getAsJsonArray("links"));
+
         User deserializedUser = serializer.deserialize(serialized, User.class, null);
         Assert.assertEquals("user-id", deserializedUser.getId());
 
