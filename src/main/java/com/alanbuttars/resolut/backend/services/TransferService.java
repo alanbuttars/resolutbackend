@@ -141,23 +141,26 @@ public class TransferService {
         }
         Account senderAccount = senderAccountResult.getTarget();
 
-        /* 3. Validate the sender has sufficient funds */
-        if (senderAccount.getBalance() < amount) {
-            return Result.failure("Account " + senderAccountId + " for user " + senderUserId + " has insufficient funds");
-        }
-
-        /* 4. Fetch the receiver account */
+        /* 3. Fetch the receiver account */
         Result<Account> receiverAccountResult = AccountService.getInstance().getAccount(receiverUserId, receiverAccountId);
         if (!receiverAccountResult.succeeded()) {
             return Result.failure(receiverAccountResult.getErrorMessage());
         }
         Account receiverAccount = receiverAccountResult.getTarget();
 
-        /* 5. Update each account balance */
-        senderAccount.addToBalance(-amount);
-        receiverAccount.addToBalance(amount);
+        /* 4. Synchronize the sender account balance to ensure a competing thread doesn't move its balance below 0 */
+        synchronized (senderAccount) {
+            /* 5. Validate the sender has sufficient funds */
+            if (senderAccount.getBalance() < amount) {
+                return Result.failure("Account " + senderAccountId + " for user " + senderUserId + " has insufficient funds");
+            }
 
-        /* 6. Create and register the transaction */
+            /* 6. Update each account balance */
+            senderAccount.addToBalance(-amount);
+            receiverAccount.addToBalance(amount);
+        }
+
+        /* 7. Create and register the transaction */
         Transfer transfer = new Transfer(senderUserId, senderAccountId, receiverUserId, receiverAccountId, amount);
         transfersBySenderUserId.get(senderUserId).get(senderAccountId).put(transfer.getId(), transfer);
         transfersByReceiverUserId.get(receiverUserId).get(receiverAccountId).put(transfer.getId(), transfer);
